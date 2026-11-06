@@ -30,10 +30,11 @@ def adicionar_contato_favoritos(contatos, indice_contatos):
     print(f"Contato {indice_contatos} adicionado aos favoritos!")
     return
 
-def ver_contatos_favoritos(contatos):
-    for indice, contato in enumerate(contatos, start=1):
+def ver_contatos_favoritos(contatos,  indice_contatos):
+    indice_contatos_ajustado = int(indice_contatos) -1
+    for indice_contatos_ajustado, contato in enumerate(contatos, start=1):
         if contato["favorito"]:
-            print(f"{indice}. Nome: {contato['contato']}, Telefone: {contato['telefone']}, E-mail: {contato['e-mail']} ★")
+            print(f"{indice_contatos_ajustado}. Nome: {contato['contato']}, Telefone: {contato['telefone']}, E-mail: {contato['e-mail']} ★")
     return
 
 
@@ -66,8 +67,11 @@ while True:
         indice_contatos = input("Digite o número do contato que deseja adicionar aos favoritos: ")
         adicionar_contato_favoritos(contatos, indice_contatos)
     elif escolha == "6":
-        print("====== Contatos Favoritos ======")
-        ver_contatos_favoritos(contatos)
+        if any(contato["favorito"] for contato in contatos):
+            print("====== Contatos Favoritos ======")
+            ver_contatos_favoritos(contatos, indice_contatos)
+        else:
+            print("Nenhum contato marcado como favorito...")
     elif escolha == "7":
         print("Programa finalizado")
         break
