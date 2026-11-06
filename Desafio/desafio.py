@@ -8,20 +8,33 @@ Desenvolveremos uma agenda para salvar, editar, deletar e marcar um contato como
  -Criar funcionalidade para apagar um contato "
 """
 contatos = []
-# 1.
+
 def adicionar_contato(contatos, nome_contato, email_contato, telefone_contato):
     contato = {"contato": nome_contato, "e-mail": email_contato, "telefone": telefone_contato, "favorito": False}
     contatos.append(contato)
     return
 
-# 2.
+
 def ver_contatos(contatos):
     for indice, contato in enumerate(contatos, start=1):
         nome_contato = contato["contato"]
+        telefone_contato = contato["telefone"]
+        email_contato = contato["e-mail"]
         status = "★" if contato["favorito"] else "☆"
         print(f"{indice}. Nome: {nome_contato}, Telefone: {telefone_contato}, E-mail: {email_contato} {status}")
     return
 
+def adicionar_contato_favoritos(contatos, indice_contatos):
+    indice_contatos_ajustado = int(indice_contatos) -1
+    contatos[indice_contatos_ajustado]["favorito"] = True
+    print(f"Contato {indice_contatos} adicionado aos favoritos!")
+    return
+
+def ver_contatos_favoritos(contatos):
+    for indice, contato in enumerate(contatos, start=1):
+        if contato["favorito"]:
+            print(f"{indice}. Nome: {contato['contato']}, Telefone: {contato['telefone']}, E-mail: {contato['e-mail']} ★")
+    return
 
 
 while True:
@@ -48,6 +61,13 @@ while True:
             print("\nNenhum contato na agenda! Tente adicionar digitando 1.")
         else:
             ver_contatos(contatos)
+    elif escolha == "4":
+        ver_contatos(contatos)
+        indice_contatos = input("Digite o número do contato que deseja adicionar aos favoritos: ")
+        adicionar_contato_favoritos(contatos, indice_contatos)
+    elif escolha == "6":
+        print("====== Contatos Favoritos ======")
+        ver_contatos_favoritos(contatos)
     elif escolha == "7":
         print("Programa finalizado")
         break
